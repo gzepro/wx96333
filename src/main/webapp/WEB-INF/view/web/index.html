@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<title>电梯报警</title>
+	</head>
+	<body>
+		<div class="container-fluid" id="show_form">
+			<h1>电梯报警提交</h1>
+			
+			<form class="form-horizontal">
+				<div class="form-group">
+				    <label for="inputEmail3" class="col-sm-2 control-label">联系手机号：</label>
+				    <div class="col-sm-10">
+				    	<input type="text" class="form-control" id="mobile" placeholder="请输入你的手机号码，方便我们联系你！">
+				    </div>
+				  </div>
+				<div class="form-group">
+				    <label for="inputEmail3" class="col-sm-2 control-label">被困电梯码：</label>
+				    <div class="col-sm-10">
+				    	<input type="text" class="form-control" id="zcode" placeholder="请查找电梯编号提供给我们！">
+				    </div>
+				</div>
+				
+				<div class="form-group">
+				    <label for="inputEmail3" class="col-sm-2 control-label">故障类型：</label>
+				    <div class="col-sm-10">
+				    	<select class="form-control" id="ztype">
+						  <option>困人</option>
+						  <option>电梯故障</option>
+						  <option>伤人</option>
+						</select>
+				    </div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<button type="button" class="btn btn-primary" id="submit">提交信息</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="container-fluid" id="show_result" style="display: none;">
+			<h1 id="h_result"></h1>
+		</div>
+		
+		
+		<script src="/js/js96333.js"></script>
+		
+	</body>
+</html>

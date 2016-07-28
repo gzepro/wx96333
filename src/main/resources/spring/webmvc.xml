@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<context:component-scan base-package="${controller.package}"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<mvc:annotation-driven>
+		<!-- 解决@ResponseBody中文乱码 -->
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name = "supportedMediaTypes">
+	                      <list>
+	                          <value>text/html;charset=UTF-8</value>
+	                     </list>   
+	                </property>  
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+
+	<mvc:resources location="/js/" mapping="/js/**" cache-period="86400" />
+	<mvc:resources location="/images/" mapping="/images/**" cache-period="86400" />
+	<mvc:resources location="/css/" mapping="/css/**" cache-period="86400" />
+	<mvc:resources location="/uploads/" mapping="/uploads/**" cache-period="86400" />
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" cache-period="86400" />
+ 	<mvc:resources mapping="/ehais/**" location="classpath:/META-INF/resources/ehais/" cache-period="86400" />
+ 	<mvc:resources mapping="/style/" location="/style/**" cache-period="86400" />
+ 
+
+	<mvc:default-servlet-handler />
+
+	<!-- freemarker的配置 -->
+	<bean id="freemarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPaths"  >
+			<list>
+				<value>/WEB-INF/view/</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">10</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="number_format">#.##</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- FreeMarker视图解析 如返回userinfo。。在这里配置后缀名ftl和视图解析器。。 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="suffix" value=".html" />
+		<property name="contentType" value="text/html;charset=UTF8" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames" value="i18n/messages" />
+	</bean>
+
+	<!-- 拦截器 -->
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/wx-**"/>
+			<ref bean="indexInterceptor"/>
+		</mvc:interceptor>		
+	</mvc:interceptors>
+
+	<bean id="indexInterceptor" class="com.gzepro.wx96333.interceptor.IndexInterceptor">
+		<property name="welcomeUrl" value="/welcome"/>
+		<property name="ignoreUrls">
+			<list>
+				<value>/index</value>
+			</list>
+		</property>
+	</bean>
+
+	 
+</beans>

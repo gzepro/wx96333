@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=e-weixin.jar -DgroupId=org.ehais.weixin -DartifactId=e-weixin -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar
